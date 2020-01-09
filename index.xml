@@ -1,14 +1,97 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My New Hugo Site</title>
+    <title>山鬼谣</title>
     <link>http://b3601993.github.io/</link>
-    <description>Recent content on My New Hugo Site</description>
+    <description>Recent content on 山鬼谣</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Sun, 05 Jan 2020 21:16:22 +0000</lastBuildDate>
     
 	<atom:link href="http://b3601993.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>虚拟机中的CentOS 7设置固定IP连接最理想的配置</title>
+      <link>http://b3601993.github.io/posts/%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E7%9A%84centos-7%E8%AE%BE%E7%BD%AE%E5%9B%BA%E5%AE%9Aip%E8%BF%9E%E6%8E%A5%E6%9C%80%E7%90%86%E6%83%B3%E7%9A%84%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Sun, 05 Jan 2020 21:16:22 +0000</pubDate>
+      
+      <guid>http://b3601993.github.io/posts/%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E7%9A%84centos-7%E8%AE%BE%E7%BD%AE%E5%9B%BA%E5%AE%9Aip%E8%BF%9E%E6%8E%A5%E6%9C%80%E7%90%86%E6%83%B3%E7%9A%84%E9%85%8D%E7%BD%AE/</guid>
+      <description>环境 window 10
+前言 1、笔记本主机IP为设置自动获取，不管什么情况下，不受虚拟机影响，只要连接外网就可以正常上网； 2、只要笔记本主机可以正常访问外网，启动虚拟机中的CentOS 7系统就可以正常访问外网，无需再进行任何设置； 3、虚拟机设置为固定IP，不管主机在什么网络环境下，是断网环境，还是连接任何网段访问外网的环境下，虚拟机的IP都固定不变，而且使用终端连接，始终不变，正常连接； 4、虚拟机的固定IP可以按照自己想设置的IP地址网段随意设置，比如我就想设置固定IP为192.168.2.2。 以上4点，网上我没有找到一个帖子可以达到我要求的效果，经过我这段时间研究，经过各种尝试，期间出现各种问题，测试稳定后，总结如下分享给大家，希望对大家有所帮助，少走弯路。
+配置环境说明：主机为win10家庭版，虚拟机为VMware Workstation 12 Pro中文版，虚拟机中的linux系统为CentOS 7 64位。
+1、设置虚拟机的网络连接方式： 按照如下图设置，英文版的对照设置即可：
+2.配置虚拟机的NAT模式具体地址参数：
+（1）编辑–虚拟网络编辑器–更改设置
+（2）选择VMnet8–取消勾选使用本地DHCP–设置子网IP–网关IP设置（记住此处设置，后面要用到），如下图
+说明：修改子网IP设置，实现自由设置固定IP； 若你想设置固定IP为192.168.2.2-255，比如192.168.2.2，则子网IP为192.168.2.0； 若你想设置固定IP为192.168.1.2-255，比如192.168.1.2，则子网IP为192.168.1.0； 也就是说，你想配置成哪个网段，IP地址最后那位为0即可。
+（3）网关IP可以参照如下格式修改：192.168.2.1
+3.配置笔记本主机具体VMnet8本地地址参数：
+说明：第6步中的IP地址随意设置，但是要保证不能跟你要设置虚拟机的固定IP一样。我设置的是：192.168.116.1
+4.修改虚拟机中的CentOS 7系统为固定IP的配置文件：
+（1）进入centos7命令行界面，修改如下内容：
+cd /etc/sysconfig/network-scripts/ vim ifcfg-eno16777736 #我的是ifcfg-en33,视电脑情况而定 说明：
+#将IPV6…..协议都注释； BOOTPROTO=static #开机协议，有dhcp及static； ONBOOT=yes #设置为开机启动； DNS1=114.114.114.114 #这个是国内的DNS地址，是固定的； IPADDR=192.168.2.2 #你想要设置的固定IP，理论上192.168.2.2-255之间都可以，请自行验证； NETMASK=255.255.255.0 #子网掩码，不需要修改； GATEWAY=192.168.2.1 #网关，这里应该和你“2.配置虚拟机的NAT模式具体地址参数”中的（2）选择VMnet8--取消勾选使用本地DHCP--设置子网IP--网关IP设置 一样才行。 本人实际测试过，即使不注释IPV6也可以。你也可以试试不注释。
+—-========—-2017年8月17日———–=====——start—— 我最终的配置：
+TYPE=Ethernet #BOOTPROTO=dhcp BOOTPROTO=none DEFROUTE=yes IPV4_FAILURE_FATAL=no IPV6INIT=yes IPV6_AUTOCONF=yes IPV6_DEFROUTE=yes IPV6_FAILURE_FATAL=no IPV6_ADDR_GEN_MODE=stable-privacy NAME=ens33 UUID=f2367168-1c8f-4b43-8bf0-84f9d857a053 DEVICE=ens33 ONBOOT=yes DNS1=114.114.114.144 ZONE=public IPADDR=192.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://b3601993.github.io/posts/fatal-refusing-to-merge-unrelated-histories/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://b3601993.github.io/posts/fatal-refusing-to-merge-unrelated-histories/</guid>
+      <description>环境 MacBook Pro
+Git: 2.21.0
+前言 在玩Hugo的最后一步时，因为我的GitHub以前就有代码了，所以我先执行了：
+git rm -rf --cache * 之后，再按照Hugo网上的教程去推送代码时，遇到了如下的错误：
+yutaodeMacBook-Pro:public yutao$ git push -u origin master To github.com:b3601993/b3601993.github.io.git ! [rejected] master -&amp;gt; master (fetch first) error: failed to push some refs to &amp;#39;git@github.com:b3601993/b3601993.github.io.git&amp;#39; hint: Updates were rejected because the remote contains work that you do hint: not have locally. This is usually caused by another repository pushing hint: to the same ref. You may want to first integrate the remote changes hint: (e.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://b3601993.github.io/posts/gitee%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://b3601993.github.io/posts/gitee%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</guid>
+      <description>主题 进入刚刚生成的blog文件夹，然后去主题网站选个主题：https://hexo.io/themes/
+看中某个主题后，点击进去，获取地址；
+比如我选:adagio主题
+然后执行如下：
+# /Users/yutao/myproject/blog -- 我执行文件夹 git clone https://github.com/Hanlin-Dong/hexo-theme-adagio.git themes/ 然后修改_config.yml文件中的theme属性。
+部署到远程代码pages上 安装hexo-deployer-git npm install hexo-deployer-git --save 然后在_config.yml文件中修改如下：
+![image-20200108194544384](/Users/yutao/Library/Application Support/typora-user-images/image-20200108194544384.png)</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://b3601993.github.io/posts/gitee%E5%92%8Cgithub%E5%AF%B9%E6%AF%94/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://b3601993.github.io/posts/gitee%E5%92%8Cgithub%E5%AF%B9%E6%AF%94/</guid>
+      <description>前言 没啥对比，基本一模一样，哈哈~
+仓库名和路径名 仓库名可以和路径名不一样的；
+![image-20200108160744781](/Users/yutao/Library/Application Support/typora-user-images/image-20200108160744781.png)
+我的仓库名是：
+yutaoblog 而我的路径名为：最后那个为：taobo；
+hello
+此时访问路径为：http://taobo.gitee.io/
+否则，假设：仓库名和路径名都是：yutaoblog，
+那么访问就变为了：http://taobo.gitee.io/yutaoblog
+配置页面 GitHub Github 在 settings 页面中的 GitHub Pages中应该也可以设置。
+Gitee 点击 服务 -&amp;gt; Gitee Pages</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://b3601993.github.io/posts/macbook-pro-%E5%8D%B8%E8%BD%BDnode/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://b3601993.github.io/posts/macbook-pro-%E5%8D%B8%E8%BD%BDnode/</guid>
+      <description>执行命令：
+sudo npm uninstall npm -g 删除残留文件 sudo rm -rf /usr/local/lib/node /usr/local/lib/node_modules /var/db/receipts/org.nodejs.* sudo rm -rf /usr/local/include/node sudo rm -rf /Users/yutao/.npm # /Users/#Users/.npm 注意换成自己的用户名 sudo rm /usr/local/bin/node sudo rm /usr/local/share/man/man1/node.1 sudo rm /usr/local/lib/dtrace/node.d 参考地址：https://juejin.im/post/5cf4c605e51d4577407b1ce8</description>
+    </item>
     
   </channel>
 </rss>
